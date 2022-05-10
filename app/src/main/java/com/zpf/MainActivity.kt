@@ -19,7 +19,7 @@ import kotlin.math.abs
 
 class MainActivity : AppCompatActivity() {
     private lateinit var vMask: View
-    private val hintViewMap = ConcurrentHashMap<Int, TextView?>()
+    private val hintViewMap = ConcurrentHashMap<Int, TextView>()
     private val hintViewArray = ArrayList<TextView>()
 
     //    private var limitBytes = 0L
@@ -106,6 +106,9 @@ class MainActivity : AppCompatActivity() {
 //        etAddress.setText("https://book.kotlincn.net/kotlincn-docs.pdf")
 //        etAddress.setText("https://down11.qwp365.cn/app/yuanshen_2.1.0.apk")
         btnDownload.setOnClickListener {
+            if (vMask.visibility == View.VISIBLE) {
+                return@setOnClickListener
+            }
             vMask.visibility = View.VISIBLE
             hintViewMap.clear()
             deleteFile(cacheDir)
@@ -206,12 +209,12 @@ class MainActivity : AppCompatActivity() {
                 for (item in hintViewArray) {
                     if (!item.isSelected) {
                         view = item
+                        hintViewMap[id] = item
                         break
                     }
                 }
             }
             view?.isSelected = true
-            hintViewMap[id] = view
         }
         runOnUiThread {
             if (view == null) {

@@ -105,7 +105,7 @@ object DownloadInfoManager {
         }
 
         fun showTotalBytes(): String {
-            return (totalBytes.toString() + "B>>>" + (totalBytes.toFloat() / MB).toString() + "MB")
+            return (totalBytes.toString() + "B>>" + (totalBytes.toFloat() / MB).toString() + "MB")
         }
     }
 }
