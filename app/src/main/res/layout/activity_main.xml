@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingHorizontal="20dp">
+
+    <EditText
+        android:id="@+id/et_address"
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:maxLines="3"
+        android:textSize="14dp"
+        android:gravity="bottom"
+        android:ellipsize="end"
+        android:layout_marginTop="40dp"
+        android:hint="输入下载地址" />
+
+    <androidx.appcompat.widget.AppCompatSeekBar
+        android:id="@+id/sb_limit"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="140dp" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_limit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="175dp"
+        android:text="下载限制：" />
+
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/sw_compare"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_marginTop="196dp"
+        android:text="开启对比" />
+
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/sw_type"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_marginTop="238dp"
+        android:text="使用小米下载器" />
+
+    <Button
+        android:id="@+id/btn_download"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginTop="190dp"
+        android:text="开始下载" />
+
+    <TextView
+        android:id="@+id/tv_hint1"
+        android:layout_width="match_parent"
+        android:layout_height="190dp"
+        android:layout_marginTop="280dp"
+        android:hint="下载耗时信息"
+        android:textSize="16dp" />
+
+    <TextView
+        android:id="@+id/tv_hint2"
+        android:layout_width="match_parent"
+        android:layout_height="190dp"
+        android:layout_marginTop="470dp"
+        android:textSize="16dp"
+        tools:text="下载耗时信息" />
+
+    <View
+        android:id="@+id/v_mask"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" />
+</FrameLayout>
