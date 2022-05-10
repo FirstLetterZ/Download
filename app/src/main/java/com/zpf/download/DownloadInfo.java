@@ -170,7 +170,7 @@ public class DownloadInfo {
     public int mBypassRecommendedSizeLimit;
     public boolean mIsVisibleInDownloadsUi;
     public boolean mMiui;//使用小米下载器线程
-    public long mShutdownBytes;//下载到指定大小后结束
+    public int mShutdownProcess;//下载到指定百分比后结束
 
     private List<Pair<String, String>> mRequestHeaders = new ArrayList<Pair<String, String>>();
 

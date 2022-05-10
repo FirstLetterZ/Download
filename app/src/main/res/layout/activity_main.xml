@@ -5,24 +5,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:paddingHorizontal="20dp">
+    android:paddingHorizontal="16dp">
 
     <EditText
         android:id="@+id/et_address"
         android:layout_width="match_parent"
         android:layout_height="90dp"
-        android:maxLines="3"
-        android:textSize="14dp"
-        android:gravity="bottom"
-        android:ellipsize="end"
         android:layout_marginTop="40dp"
-        android:hint="输入下载地址" />
+        android:ellipsize="middle"
+        android:gravity="bottom"
+        android:hint="输入下载地址"
+        android:textSize="14dp"
+        tools:text="https://appdl-1-drcn.dbankcdn.com/dl/appdl/application/apk/0f/0f24612b639341b5b79f0962fdbd20a3/com.tencent.tmgp.cod.2201190904.apk" />
 
     <androidx.appcompat.widget.AppCompatSeekBar
         android:id="@+id/sb_limit"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:layout_marginTop="140dp" />
+        android:layout_marginTop="140dp"
+        android:progress="100" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_limit"
@@ -37,13 +38,14 @@
         android:layout_width="wrap_content"
         android:layout_height="40dp"
         android:layout_marginTop="196dp"
-        android:text="开启对比" />
+        android:text="开启对比"
+        android:visibility="gone" />
 
     <androidx.appcompat.widget.SwitchCompat
         android:id="@+id/sw_type"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
-        android:layout_marginTop="238dp"
+        android:layout_marginTop="200dp"
         android:text="使用小米下载器" />
 
     <Button
@@ -52,6 +54,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end"
         android:layout_marginTop="190dp"
+        android:layout_marginEnd="10dp"
         android:text="开始下载" />
 
     <TextView
@@ -73,6 +76,8 @@
     <View
         android:id="@+id/v_mask"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone" />
+        android:layout_height="220dp"
+        android:layout_marginTop="30dp"
+        android:visibility="gone"
+        tools:visibility="visible" />
 </FrameLayout>

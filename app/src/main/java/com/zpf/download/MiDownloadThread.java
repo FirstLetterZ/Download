@@ -489,6 +489,10 @@ public class MiDownloadThread extends Thread implements IShutdown {
                                     STATUS_CANNOT_RESUME, "Expected partial, but received OK");
                         }
                         parseOkHeaders(conn);
+                        notifyListener(((int) mInfo.mId), 0L, mInfoDelta.mTotalBytes);
+                        if (mShutdownRequested) {
+                            throw new StopRequestException(STATUS_CANCELED, "job canceled");
+                        }
                         transferData(conn);
                         return;
 
@@ -845,7 +849,8 @@ public class MiDownloadThread extends Thread implements IShutdown {
 
     private void notifyListener(int id, Long currentBytes, Long totalBytes) {
         DownloadInfoManager.INSTANCE.onLoading(id, currentBytes, totalBytes);
-        if (mInfo.mShutdownBytes > 0 && currentBytes >= mInfo.mShutdownBytes) {
+        if (mInfo.mShutdownProcess <= 0 ||
+                (currentBytes < totalBytes && (currentBytes * 100f / totalBytes) >= mInfo.mShutdownProcess)) {
             requestShutdown();
             mInfoDelta.mStatus = STATUS_CANCELED;
         }

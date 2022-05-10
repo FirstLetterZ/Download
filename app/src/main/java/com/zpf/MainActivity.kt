@@ -15,16 +15,24 @@ import java.util.*
 import java.util.concurrent.ConcurrentHashMap
 import kotlin.collections.ArrayList
 import kotlin.collections.HashSet
+import kotlin.math.abs
 
 class MainActivity : AppCompatActivity() {
     private lateinit var vMask: View
     private val hintViewMap = ConcurrentHashMap<Int, TextView?>()
     private val hintViewArray = ArrayList<TextView>()
-    private var limitBytes = 0L
-    private val limitArray = ArrayList<Pair<String, Long>>()
-    private val defLimit = Pair("无限制", 0L)
+
+    //    private var limitBytes = 0L
+//    private val limitArray = ArrayList<Pair<String, Long>>()
+//    private val defLimit = Pair("无限制", 0L)
     private var lastClick = 0L
     private var loading = HashSet<Int>()
+
+    private val urls = arrayOf(
+        "https://appdl-1-drcn.dbankcdn.com/dl/appdl/application/apk/0f/0f24612b639341b5b79f0962fdbd20a3/com.tencent.tmgp.cod.2201190904.apk",
+        "https://appdl-1-drcn.dbankcdn.com/dl/appdl/application/apk/2c/2c8feaebc38646409ca189edb0a15438/com.netease.mrzh.huawei.2202221748.apk",
+        "https://appdlc-drcn.hispace.dbankcloud.cn/dl/appdl/application/apk/a7/a773217c1cb344249af6c41775a65a5d/com.netease.aceracer.huawei.2203031642.apk"
+    )
 
     private val downloadListener = object : DownloadListener {
 
@@ -73,66 +81,77 @@ class MainActivity : AppCompatActivity() {
         }
         val sbLimit: SeekBar = findViewById(R.id.sb_limit)
         val tvLimit: TextView = findViewById(R.id.tv_limit)
-        tvLimit.text = "下载限制：无限制"
         sbLimit.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            private var lastChange = 0L
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                if (System.currentTimeMillis() - lastChange > 200) {
+                    setLimitHint(tvLimit, sbLimit.progress)
+                    lastChange = System.currentTimeMillis()
+                }
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {
             }
 
             override fun onStopTrackingTouch(seekBar: SeekBar?) {
-                val i = sbLimit.progress % 10
-                val p = if (i >= 5) {
-                    sbLimit.progress / 10 + 1
-                } else {
-                    sbLimit.progress / 10
-                }
-                sbLimit.progress = p * 10
-                val pairInfo = limitArray.getOrNull(p) ?: defLimit
-                tvLimit.text = "下载字节限制：" + pairInfo.first
-                limitBytes = pairInfo.second
+                setLimitHint(tvLimit, sbLimit.progress)
+                lastChange = System.currentTimeMillis()
             }
-
         })
+        setLimitHint(tvLimit, sbLimit.progress)
         val btnDownload: Button = findViewById(R.id.btn_download)
         val etAddress: EditText = findViewById(R.id.et_address)
+        val defUrl = urls[abs(Random().nextInt()) % urls.size]
+        etAddress.setText(defUrl)
 //        etAddress.setText("https://book.kotlincn.net/kotlincn-docs.pdf")
-        etAddress.setText("https://down11.qwp365.cn/app/yuanshen_2.1.0.apk")
+//        etAddress.setText("https://down11.qwp365.cn/app/yuanshen_2.1.0.apk")
         btnDownload.setOnClickListener {
             vMask.visibility = View.VISIBLE
             hintViewMap.clear()
             deleteFile(cacheDir)
             val address = etAddress.text.toString()
+            if (address.isEmpty()) {
+                Toast.makeText(this, "需要输入下载地址", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
             for (item in hintViewArray) {
                 item.text = null
                 item.isSelected = false
             }
-            if (swCompare.isChecked) {
-                val info1 = DownloadInfoManager.create(this, address, false, limitBytes)
+            val limit = sbLimit.progress
+            if (swCompare.visibility == View.VISIBLE && swCompare.isChecked) {
+                val info1 = DownloadInfoManager.create(this, address, false, limit)
                 Helpers.scheduleJob(this, info1)
-                val info2 = DownloadInfoManager.create(this, address, true, limitBytes)
+                val info2 = DownloadInfoManager.create(this, address, true, limit)
                 Helpers.scheduleJob(this, info2)
             } else {
-                val info = DownloadInfoManager.create(this, address, swType.isChecked, limitBytes)
+                val info = DownloadInfoManager.create(this, address, swType.isChecked, limit)
                 Helpers.scheduleJob(this, info)
             }
         }
         DownloadInfoManager.listener = downloadListener
-        limitArray.add(defLimit)
+//        limitArray.add(defLimit)
 //        limitArray.add(Pair("5GB", 5L * 1024 * 1024 * 1024))
-        limitArray.add(Pair("2GB", 2L * DownloadInfoManager.GB))
-        limitArray.add(Pair("1GB", 1L * DownloadInfoManager.GB))
-        limitArray.add(Pair("500M", 500L * DownloadInfoManager.MB))
-        limitArray.add(Pair("200M", 200L * DownloadInfoManager.MB))
-        limitArray.add(Pair("100M", 100L * DownloadInfoManager.MB))
-        limitArray.add(Pair("50M", 50L * DownloadInfoManager.MB))
-        limitArray.add(Pair("20M", 20L * DownloadInfoManager.MB))
-        limitArray.add(Pair("10M", 10L * DownloadInfoManager.MB))
-        limitArray.add(Pair("5M", 5L * DownloadInfoManager.MB))
-        limitArray.add(Pair("2M", 2L * DownloadInfoManager.MB))
+//        limitArray.add(Pair("2GB", 2L * DownloadInfoManager.GB))
+//        limitArray.add(Pair("1GB", 1L * DownloadInfoManager.GB))
+//        limitArray.add(Pair("500M", 500L * DownloadInfoManager.MB))
+//        limitArray.add(Pair("200M", 200L * DownloadInfoManager.MB))
+//        limitArray.add(Pair("100M", 100L * DownloadInfoManager.MB))
+//        limitArray.add(Pair("50M", 50L * DownloadInfoManager.MB))
+//        limitArray.add(Pair("20M", 20L * DownloadInfoManager.MB))
+//        limitArray.add(Pair("10M", 10L * DownloadInfoManager.MB))
+//        limitArray.add(Pair("5M", 5L * DownloadInfoManager.MB))
+//        limitArray.add(Pair("2M", 2L * DownloadInfoManager.MB))
         hintViewArray.add(tvHint1)
         hintViewArray.add(tvHint2)
+    }
+
+    private fun setLimitHint(tvLimit: TextView, progress: Int) {
+        if (progress == 0) {
+            tvLimit.text = "下载限制：仅连接"
+        } else {
+            tvLimit.text = "下载限制：$progress %"
+        }
     }
 
     override fun onDestroy() {
@@ -212,6 +231,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun copyMessage(view: TextView) {
+        if (vMask.visibility == View.VISIBLE) {
+            return
+        }
         val message = view.text.toString()
         if (message.length < 10) {
             return

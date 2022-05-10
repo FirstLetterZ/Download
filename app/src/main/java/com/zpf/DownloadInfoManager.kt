@@ -43,7 +43,7 @@ object DownloadInfoManager {
                     "准备工作耗时：${temp.time2 - temp.time1} 毫秒 \n" +
                     "下载文件用时：${timeCost} 毫秒 \n" +
                     "文件大小：${temp.showTotalBytes()}\n" +
-                    "当前下载大小：${temp.showCurrentBytes()}\n" +
+                    "下载大小：${temp.showCurrentBytes()}\n" +
                     "平均下载速度：${temp.speed} KB/s"
         )
     }
@@ -59,7 +59,7 @@ object DownloadInfoManager {
                     "下载文件用时：${temp.time3 - temp.time2} 毫秒 \n" +
                     "下载总用时：${temp.time3 - temp.time1} 毫秒 \n" +
                     "文件大小：${temp.showTotalBytes()}\n" +
-                    "当前下载大小：${temp.showCurrentBytes()}\n" +
+                    "下载大小：${temp.showCurrentBytes()}\n" +
                     "平均下载速度：${temp.speed} KB/s"
         )
     }
@@ -68,13 +68,13 @@ object DownloadInfoManager {
         context: Context,
         url: String,
         useMiuiDownload: Boolean,
-        shutdownBytes: Long
+        shutdownProcess: Int
     ): DownloadInfo {
         val info = DownloadInfo(context)
         val infoId = info.hashCode()
         info.mId = infoId.toLong()
         info.mUri = url
-        info.mShutdownBytes = shutdownBytes
+        info.mShutdownProcess = shutdownProcess
         info.mFileName = File(context.cacheDir, "download_" + info.mId).absolutePath
         info.mMiui = useMiuiDownload
 //        info.mDescription
@@ -101,7 +101,7 @@ object DownloadInfoManager {
         var useMiui: Boolean = false
 
         fun showCurrentBytes(): String {
-            return (currentBytes.toString() + "B>>>" + (currentBytes.toFloat() / MB).toString() + "MB")
+            return (currentBytes.toString() + "B>>" + (currentBytes.toFloat() / MB).toString() + "MB")
         }
 
         fun showTotalBytes(): String {
