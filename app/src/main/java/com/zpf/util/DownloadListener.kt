@@ -1,4 +1,4 @@
-package com.zpf
+package com.zpf.util
 
 interface DownloadListener {
     fun onStartLoad(id: Int, message: String)

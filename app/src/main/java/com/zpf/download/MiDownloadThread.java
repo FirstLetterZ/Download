@@ -5,10 +5,8 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.drm.DrmManagerClient;
-import android.net.ConnectivityManager;
 import android.net.Network;
 import android.net.NetworkInfo;
-import android.net.TrafficStats;
 import android.net.Uri;
 import android.os.ParcelFileDescriptor;
 import android.os.Process;
@@ -22,8 +20,7 @@ import android.util.Pair;
 
 import androidx.core.math.MathUtils;
 
-import com.zpf.DownloadInfoManager;
-import com.zpf.download.SystemFacade;
+import com.zpf.util.DownloadInfoManager;
 
 import java.io.File;
 import java.io.FileDescriptor;
@@ -50,8 +47,6 @@ import static com.zpf.download.Downloads.Impl.STATUS_CANCELED;
 import static com.zpf.download.Downloads.Impl.STATUS_CANNOT_RESUME;
 import static com.zpf.download.Downloads.Impl.STATUS_FILE_ERROR;
 import static com.zpf.download.Downloads.Impl.STATUS_HTTP_DATA_ERROR;
-import static com.zpf.download.Downloads.Impl.STATUS_INSUFFICIENT_SPACE_ERROR;
-import static com.zpf.download.Downloads.Impl.STATUS_PAUSED_BY_APP;
 import static com.zpf.download.Downloads.Impl.STATUS_QUEUED_FOR_WIFI;
 import static com.zpf.download.Downloads.Impl.STATUS_RUNNING;
 import static com.zpf.download.Downloads.Impl.STATUS_SUCCESS;
@@ -849,7 +844,7 @@ public class MiDownloadThread extends Thread implements IShutdown {
 
     private void notifyListener(int id, Long currentBytes, Long totalBytes) {
         DownloadInfoManager.INSTANCE.onLoading(id, currentBytes, totalBytes);
-        if (mInfo.mShutdownProcess <= 0 ||
+        if (mInfo.mCanceled || mInfo.mShutdownProcess <= 0 ||
                 (currentBytes < totalBytes && (currentBytes * 100f / totalBytes) >= mInfo.mShutdownProcess)) {
             requestShutdown();
             mInfoDelta.mStatus = STATUS_CANCELED;

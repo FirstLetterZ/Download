@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="300dp"
+    android:layout_height="460dp">
+
+    <ListView
+        android:id="@+id/lv_list"
+        android:layout_width="match_parent"
+        android:layout_height="400dp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginTop="420dp"
+        android:background="#eeeeee" />
+
+    <TextView
+        android:id="@+id/btn_cancel"
+        android:layout_width="150dp"
+        android:layout_height="40dp"
+        android:layout_gravity="bottom"
+        android:gravity="center"
+        android:text="取消" />
+
+    <TextView
+        android:id="@+id/btn_confirm"
+        android:layout_width="150dp"
+        android:layout_height="40dp"
+        android:layout_gravity="end|bottom"
+        android:gravity="center"
+        android:text="确定"
+        android:textColor="#2196F3" />
+</FrameLayout>

@@ -3,18 +3,14 @@ package com.zpf.download;
 import android.app.DownloadManager;
 import android.app.job.JobInfo;
 import android.content.ContentResolver;
-import android.content.ContentUris;
 import android.content.Context;
-import android.content.Intent;
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.Environment;
-import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.util.Log;
 import android.util.Pair;
 
-import com.zpf.DownloadInfoManager;
+import com.zpf.util.DownloadInfoManager;
 
 import java.io.File;
 import java.io.IOException;
@@ -171,6 +167,7 @@ public class DownloadInfo {
     public boolean mIsVisibleInDownloadsUi;
     public boolean mMiui;//使用小米下载器线程
     public int mShutdownProcess;//下载到指定百分比后结束
+    public volatile boolean mCanceled;//请求取消
 
     private List<Pair<String, String>> mRequestHeaders = new ArrayList<Pair<String, String>>();
 

@@ -3,14 +3,12 @@ package com.zpf.download;
 
 import android.app.job.JobParameters;
 import android.app.job.JobService;
-import android.database.ContentObserver;
 import android.util.Log;
 import android.util.SparseArray;
 
 
-import com.zpf.DownloadInfoManager;
+import com.zpf.util.DownloadInfoManager;
 
-import static com.zpf.download.Downloads.Impl.ALL_DOWNLOADS_CONTENT_URI;
 import static com.zpf.download.Constants.TAG;
 
 /**

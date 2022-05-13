@@ -29,6 +29,20 @@ android {
 }
 
 dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.aar'])
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.3.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+
+//    yc-download
+    implementation 'com.github.SirLYC:YC-Downloader:0.7.1-beta'
+    implementation 'com.squareup.okhttp3:okhttp:3.14.1'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.14.1'
+    implementation 'org.greenrobot:greendao:3.2.2'
+
+    //okdownload 依赖
+    implementation 'com.liulishuo.okdownload:okdownload:1.0.5'
+    implementation "com.liulishuo.okdownload:sqlite:1.0.7"
+    implementation "com.liulishuo.okdownload:okhttp:1.0.7"
+    implementation "com.liulishuo.okdownload:ktx:1.0.7"
 }

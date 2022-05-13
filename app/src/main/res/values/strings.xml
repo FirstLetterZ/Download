@@ -1,3 +1,20 @@
 <resources>
     <string name="app_name">Download</string>
+
+    <string name="test_download_addOneTask">随机开始一个下载</string>
+    <string name="test_download_addAllTask">随机开始多个下载</string>
+    <string name="test_download_addInstallTask">测试指定下载</string>
+
+    <string name="test_download_pauseRunning">暂停下载中</string>
+    <string name="test_download_pauseWaiting">暂停等待中</string>
+    <string name="test_download_pauseAll">暂停所有</string>
+
+    <string name="test_download_resumePaused">恢复已暂停</string>
+    <string name="test_download_resumeFailed">恢复已失败</string>
+    <string name="test_download_resumeAll">恢复所有</string>
+
+    <string name="test_channel_read_downloand">读取下载包渠道号，测试前先下载渠道包</string>
+    <string name="test_channel_read_instatll">读取已安装渠道号，测试前先下载安装</string>
+    <string name="test_channel_read_all">查看手机所有应用渠道号</string>
+    <string name="test_download_manager">打开下载管理页面</string>
 </resources>
